@@ -14,7 +14,7 @@ The movement of the Sprite is simply done by using the arrow keys in your keyboa
 Ensure you have Java installed on your machine. This application requires Java 8 or higher. If Java is not installed, you can download it from the [Oracle Website](https://www.oracle.com/ph/java/technologies/downloads/).
 
 #### Option 1: Run the Executable JAR File
-1. Download the `ParticleSimulator.jar` file from the repository.
+1. Download the `ParticleSimulator2.jar` file from the repository.
 2. Open a terminal or command prompt.
 3. Navigate to the directory where the `ParticleSimulator2.jar` file is located.
 4. Execute the following command: java -jar ParticleSimulator2.jar
