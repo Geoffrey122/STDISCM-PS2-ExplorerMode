@@ -6,7 +6,7 @@ This is a Java application for simulating particles on a 1280x720 canvas. Featur
 This mode is used for activating the sprite and navigating to wherever desired in the canvas. The sprite is centered within the screen and uses a grid perspective in terms of rendering nearby particles in a zoomed perspective.
 
 ### Movement of Sprite
-The movement of the Sprite is simply done by using the arrow buttons.
+The movement of the Sprite is simply done by using the arrow keys in your keyboard.
 
 ## Getting Started
 
