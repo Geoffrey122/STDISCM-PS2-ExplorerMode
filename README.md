@@ -16,8 +16,8 @@ Ensure you have Java installed on your machine. This application requires Java 8
 #### Option 1: Run the Executable JAR File
 1. Download the `ParticleSimulator.jar` file from the repository.
 2. Open a terminal or command prompt.
-3. Navigate to the directory where the `ParticleSimulator.jar` file is located.
-4. Execute the following command: java -jar ParticleSimulator.jar
+3. Navigate to the directory where the `ParticleSimulator2.jar` file is located.
+4. Execute the following command: java -jar ParticleSimulator2.jar
 
 #### Option 2: Run as a Project
 1. Clone or download the project source code from the repository.
