@@ -207,35 +207,57 @@ public class MainScreenUI extends JPanel {
                 int explorerX = (int) explorer.getX();
                 int explorerY = (int) explorer.getY();
         
-                int viewWidth = getWidth() / 2; // Half the width of the panel
-                int viewHeight = getHeight() / 2; // Half the height of the panel
-        
-                int halfWidth = viewWidth / 2;
-                int halfHeight = viewHeight / 2;
+                // Define the grid size based on the spec (19 rows by 33 columns)
+                int cellSize = 38; // Adjusted cell size
+                int gridColumns = 33;
+                int gridRows = 19;
+                int gridWidth = gridColumns * cellSize;
+                int gridHeight = gridRows * cellSize;
+                int halfGridWidth = gridWidth / 2;
+                int halfGridHeight = gridHeight / 2;
         
                 // Calculate viewport dynamically
-                int left = Math.max(0, explorerX - halfWidth);
-                int top = Math.max(0, explorerY - halfHeight);
-                int right = Math.min(getWidth(), explorerX + halfWidth);
-                int bottom = Math.min(getHeight(), explorerY + halfHeight);
+                int left = explorerX - halfGridWidth;
+                int top = explorerY - halfGridHeight;
         
                 // Determine dynamic scaling based on explorer position
-                double scale = 1.0; // Start with no scaling
-                if (explorerX < 100 || explorerX > getWidth() - 100 || explorerY < 100 || explorerY > getHeight() - 100) {
-                    scale = 1.5; // Less zoom when near edges
-                } else {
-                    scale = 2.0; // More zoom when away from edges
-                }
+                double scale = 2.0; // Example scaling factor for zooming in
+        
+                // Calculate the translation to center the explorer
+                int panelWidth = getWidth();
+                int panelHeight = getHeight();
+                int translateX = (int) ((panelWidth / scale) / 2 - explorerX);
+                int translateY = (int) ((panelHeight / scale) / 2 - explorerY);
         
                 // Apply scaling and translation
                 g2d.scale(scale, scale);
-                g2d.translate(-left / scale, -top / scale);
-                threadManager.drawParticlesInView(g2d, getHeight(), left, top, right, bottom);
+                g2d.translate(translateX, translateY);
+        
+                // Draw the particles and explorer within the viewport
+                threadManager.drawParticlesInView(g2d, panelHeight, left, top, left + gridWidth, top + gridHeight);
                 explorer.draw(g2d); // Draw the explorer
-                g2d.translate(left / scale, top / scale);
+        
+                // Draw the grid overlay
+                g2d.setColor(new Color(0, 0, 0, 0)); // Fully transparent lines
+                for (int i = 0; i <= gridColumns; i++) {
+                    int x = left + i * cellSize;
+                    g2d.drawLine(x, top, x, top + gridHeight);
+                }
+                for (int i = 0; i <= gridRows; i++) {
+                    int y = top + i * cellSize;
+                    g2d.drawLine(left, y, left + gridWidth, y);
+                }
+        
+                // Reset translation and scale
+                g2d.translate(-translateX, -translateY);
                 g2d.scale(1 / scale, 1 / scale);
             }
         }
+        
+        
+                
+        
+        
 
         private void drawDeveloperMode(Graphics g) {
             Color saiyanBlue = new Color(173, 216, 230, 255);
@@ -266,15 +288,15 @@ public class MainScreenUI extends JPanel {
             Color saiyanBlue = new Color(173, 216, 230, 255);
             g.setColor(saiyanBlue);
             g.setFont(new Font("Tahoma", Font.BOLD, 14));
+             // Mode display
             String modeText = explorerMode ? "Mode: Explorer" : "Mode: Developer";
-            g.drawString(modeText, 10, 20);
+            g.drawString(modeText, 10, 20); // Positioned at top left
 
             // Instruction text
             g.drawString("Press E to Switch Mode", getWidth() - 220, 20); // Top right position
 
             // Movement keys info
             g.drawString("Move with Arrow Keys", getWidth() / 2 - 110, getHeight() - 20); // Bottom center
-
 
             int yOffset = getHeight() - 30;
             if (fpsToDisplay >= 60) {
